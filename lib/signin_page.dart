@@ -16,7 +16,6 @@ class _SignInPageState extends State<SignInPage> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  // Tracks selected login pathway environment
   String _selectedRole = 'Individual'; 
 
   @override
@@ -36,7 +35,6 @@ class _SignInPageState extends State<SignInPage> {
         );
 
         if (mounted) {
-          // Dynamic Routing logic based on selection
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -60,7 +58,6 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Dynamically uses your app's standard indigo/primary color theme setup
     final themeColor = Theme.of(context).primaryColor;
 
     return Scaffold(
@@ -74,15 +71,21 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // --- ADDED: Your AirSense Logo Asset Window ---
-                  Image.asset(
-                    'assets/logo.png',
-                    height: 110, // Perfectly sized for login header bounds
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      // Fallback visual block if your native Mac asset path misbehaves
-                      return const Icon(Icons.blur_on, size: 80, color: Colors.indigo);
-                    },
+                  // --- RESPONSIVE LOGO FRAME ---
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 5.0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.65, 
+                        child: Image.asset(
+                          'assets/logo.png',
+                          fit: BoxFit.fitWidth, 
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.blur_on, size: 80, color: Colors.indigo);
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 15),
 
@@ -99,16 +102,12 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   const SizedBox(height: 25),
 
-                  // --- ROLE SELECTION TOGGLE PILL ---
+                  // --- PORTAL ROLE SELECTION ---
                   Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(12)),
                     padding: const EdgeInsets.all(4),
                     child: Row(
                       children: [
-                        // Individual Switch Option
                         Expanded(
                           child: GestureDetector(
                             onTap: () => setState(() => _selectedRole = 'Individual'),
@@ -121,15 +120,11 @@ class _SignInPageState extends State<SignInPage> {
                               child: Text(
                                 "Individual",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: _selectedRole == 'Individual' ? Colors.white : Colors.black54,
-                                ),
+                                style: TextStyle(fontWeight: FontWeight.bold, color: _selectedRole == 'Individual' ? Colors.white : Colors.black54),
                               ),
                             ),
                           ),
                         ),
-                        // Government Switch Option
                         Expanded(
                           child: GestureDetector(
                             onTap: () => setState(() => _selectedRole = 'Government'),
@@ -142,10 +137,7 @@ class _SignInPageState extends State<SignInPage> {
                               child: Text(
                                 "Government",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: _selectedRole == 'Government' ? Colors.white : Colors.black54,
-                                ),
+                                style: TextStyle(fontWeight: FontWeight.bold, color: _selectedRole == 'Government' ? Colors.white : Colors.black54),
                               ),
                             ),
                           ),
@@ -155,7 +147,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   const SizedBox(height: 30),
                   
-                  // Text Input Fields
+                  // Email Field
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -166,6 +158,8 @@ class _SignInPageState extends State<SignInPage> {
                     validator: (value) => value == null || value.isEmpty ? 'Enter your email' : null,
                   ),
                   const SizedBox(height: 20),
+
+                  // Standard Password Field
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
@@ -174,7 +168,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   const SizedBox(height: 30),
                   
-                  // Adaptive Dynamic Action Submit Button
+                  // Login Button
                   ElevatedButton(
                     onPressed: _isLoading ? null : _handleSignIn,
                     style: ElevatedButton.styleFrom(
@@ -183,17 +177,13 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     child: _isLoading 
                         ? const CircularProgressIndicator(color: Colors.white) 
-                        : Text("Sign In as $_selectedRole", style: const TextStyle(color: Colors.white)),
+                        : Text("Sign In as $_selectedRole", style: const TextStyle(color: Colors.white, fontSize: 16)),
                   ),
                   const SizedBox(height: 15),
 
-                  // Route Link out to new Registration forms
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignUpPage()),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage()));
                     },
                     child: const Text("Don't have an account? Sign Up"),
                   ),

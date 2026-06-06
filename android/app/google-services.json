@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "51149673937",
+    "project_id": "airsense-5af5b",
+    "storage_bucket": "airsense-5af5b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51149673937:android:b8a2d80aa8d9f5ecf2fcf0",
+        "android_client_info": {
+          "package_name": "com.example.air_sense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfo7fP4-gCKRLMg6k8cCxiMLJrpzLWmoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
